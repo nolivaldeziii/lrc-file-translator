@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Lyrics Translation Appender")]
-[assembly: AssemblyDescription("The lrc file translator app is created by: devcircuit23@gmail.com ")]
+[assembly: AssemblyDescription("The lrc file translator app is created by: devcircuit23@gmail.com \n\r\n\r github: lrc-file-translator")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Lyrics Translation Appender")]

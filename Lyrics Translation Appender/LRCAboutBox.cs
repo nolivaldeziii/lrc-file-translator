@@ -100,5 +100,10 @@ namespace Lyrics_Translation_Appender
             }
         }
         #endregion
+
+        private void LRCAboutBox_Load(object sender, EventArgs e)
+        {
+            textBoxDescription.Text += "\n\r\n Version: " + AssemblyVersion;
+        }
     }
 }

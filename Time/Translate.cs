@@ -368,12 +368,12 @@ namespace DevCircuit
             output.Add(string.Format("{0} Source: {1}", MyTime.ToLRC(), this.SourceName));
             MyTime.AddSec(1);
             output.Add(string.Format("{0} Edited By: {1}", MyTime.ToLRC(), this.EditorName));
-            MyTime.AddSec(2);
-            output.Add(string.Format("{0} Date Generated: {1}", MyTime.ToLRC(), System.DateTime.Now.ToString()));
-            MyTime.AddSec(2);
+            MyTime.AddSec(1);
+            output.Add(string.Format("{0} Date Generated(UTC): {1}", MyTime.ToLRC(), System.DateTime.UtcNow.ToString()));
+            MyTime.AddSec(1);
             output.Add(string.Format("{0}{1}", MyTime.ToLRC(), " Automated by 'lrc-file-translator' get it on github "));
-            MyTime.AddSec(2);
-            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), "."));
+            MyTime.AddSec(3);
+            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), "♫"));
             output.Add(" "); output.Add(" ");
             output.Add(" "); output.Add(" ");
         }

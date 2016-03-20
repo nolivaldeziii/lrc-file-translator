@@ -219,7 +219,7 @@ namespace Lyrics_Translation_Appender
         {
             button_copy.BackColor = System.Drawing.Color.Red;
             try {
-                Clipboard.SetText(Result.Text, TextDataFormat.Text);
+                Clipboard.SetText(Result.Text, TextDataFormat.UnicodeText);
                 button_copy.BackColor = System.Drawing.Color.Green;
             }
             catch { }
