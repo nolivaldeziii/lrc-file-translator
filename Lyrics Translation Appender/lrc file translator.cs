@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Reflection;
+
 
 namespace Lyrics_Translation_Appender
 {
-    public partial class Form1 : Form
+ 
+    public partial class MainForm : Form
     {
         DevCircuit.TranslateFromLRC Translator;
-
-        public Form1()
+        DevCircuit.Settings UserSettings;
+        
+        public MainForm()
         {
             InitializeComponent();
+            Translator = new DevCircuit.TranslateFromLRC();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -36,9 +36,11 @@ namespace Lyrics_Translation_Appender
             Result.Text = "";
             try
             {
+                
                 Translator = new DevCircuit.TranslateFromLRC(Lyrics.Text, Translate.Text);
                 Translator.MySettings.IgnoreEmprtyLyrics = true;
                 Translator.MySettings.IgnoreEmptryTranslation = true;
+                AddCredits();
             }
             catch (DevCircuit.TranslateFromLRC.TranslateFailException er)
             {
@@ -50,12 +52,13 @@ namespace Lyrics_Translation_Appender
         private void forwardToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Result.Text = "";
-
+           
             try
             {
                 Translator = new DevCircuit.TranslateFromLRC(Lyrics.Text, Translate.Text);
                 Translator.MySettings.IgnoreEmprtyLyrics = true;
                 Translator.MySettings.IgnoreEmptryTranslation = true;
+                AddCredits();
             }
             catch (DevCircuit.TranslateFromLRC.TranslateFailException er)
             {
@@ -81,6 +84,7 @@ namespace Lyrics_Translation_Appender
                 Translator = new DevCircuit.TranslateFromLRC(Lyrics.Text, Translate.Text);
                 Translator.MySettings.IgnoreEmprtyLyrics = true;
                 Translator.MySettings.IgnoreEmptryTranslation = true;
+                AddCredits();
             }
             catch (DevCircuit.TranslateFromLRC.TranslateFailException er)
             {
@@ -96,9 +100,18 @@ namespace Lyrics_Translation_Appender
 
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            about openAbout = new about();
+            LRCAboutBox openAbout = new LRCAboutBox();
             openAbout.StartPosition = FormStartPosition.CenterParent;
             openAbout.ShowDialog();
+
+           
+        }
+
+        private void AddCredits()
+        {
+            Translator.EditorName = textBox_editor.Text;
+            
+            Translator.SourceName = textBox_source.Text.Trim((":/.").ToCharArray());
         }
 
 
@@ -116,6 +129,9 @@ namespace Lyrics_Translation_Appender
         {
             int scrollPos = GetScrollPos(Lyrics.Handle, SB_VERT);
             SetScrollPos(Translate.Handle, SB_VERT, scrollPos, true);
+
+            System.Windows.Forms.Application.DoEvents();
+
         }
 
         private void Lyrics_TextChanged(object sender, EventArgs e)
@@ -131,7 +147,14 @@ namespace Lyrics_Translation_Appender
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            DevCircuit.Settings set = new DevCircuit.Settings();
+            UserSettings = new DevCircuit.Settings();
+
+
+            Assembly thisAssem = typeof(Lyrics_Translation_Appender.MainForm).Assembly;
+            AssemblyName thisAssemName = thisAssem.GetName();
+
+            Version ver = thisAssemName.Version;
+            this.Text = string.Format("{0} {1}",thisAssemName.Name, ver);
         }
 
         private void button_Addspace_Click(object sender, EventArgs e)
@@ -170,5 +193,36 @@ namespace Lyrics_Translation_Appender
             return tmp.ToArray();
         }
 
+     
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Warning", "Are you sure you want to clear you current work?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Lyrics.Text = "";
+                Translate.Text = "";
+                Result.Text = "";
+            }
+        }
+
+        private void Lyrics_MouseUp(object sender, MouseEventArgs e)
+        {
+            Translate.PerformLayout();
+        }
+
+        private void Translate_MouseUp(object sender, MouseEventArgs e)
+        {
+            Translate.PerformLayout();
+        }
+
+        private void button_copy_Click(object sender, EventArgs e)
+        {
+            button_copy.BackColor = System.Drawing.Color.Red;
+            try {
+                Clipboard.SetText(Result.Text, TextDataFormat.Text);
+                button_copy.BackColor = System.Drawing.Color.Green;
+            }
+            catch { }
+        }
     }
 }

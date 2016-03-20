@@ -1,6 +1,6 @@
 ﻿namespace Lyrics_Translation_Appender
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,15 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MainStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lRCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.translationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.appendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.forwardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,6 +49,11 @@
             this.LyricLines = new System.Windows.Forms.Label();
             this.TranslationLines = new System.Windows.Forms.Label();
             this.button_Addspace = new System.Windows.Forms.Button();
+            this.textBox_editor = new System.Windows.Forms.TextBox();
+            this.label_editor = new System.Windows.Forms.Label();
+            this.label_lyric_source = new System.Windows.Forms.Label();
+            this.textBox_source = new System.Windows.Forms.TextBox();
+            this.button_copy = new System.Windows.Forms.Button();
             this.MainStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,7 +61,6 @@
             // 
             this.MainStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editToolStripMenuItem,
             this.aboutToolStripMenuItem,
             this.aboutToolStripMenuItem1});
             this.MainStrip.Location = new System.Drawing.Point(0, 0);
@@ -73,54 +71,10 @@
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem,
-            this.openToolStripMenuItem,
-            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.newToolStripMenuItem.Text = "New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lRCToolStripMenuItem,
-            this.translationToolStripMenuItem});
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            // 
-            // lRCToolStripMenuItem
-            // 
-            this.lRCToolStripMenuItem.Name = "lRCToolStripMenuItem";
-            this.lRCToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.lRCToolStripMenuItem.Text = "LRC";
-            // 
-            // translationToolStripMenuItem
-            // 
-            this.translationToolStripMenuItem.Name = "translationToolStripMenuItem";
-            this.translationToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.translationToolStripMenuItem.Text = "Translation";
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.editToolStripMenuItem.Text = "Settings";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.fileToolStripMenuItem.Text = "New";
+            this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -129,7 +83,7 @@
             this.forwardToolStripMenuItem,
             this.replaceToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
             this.aboutToolStripMenuItem.Text = "Translate";
             // 
             // appendToolStripMenuItem
@@ -183,6 +137,7 @@
             this.Lyrics.TabIndex = 4;
             this.Lyrics.WordWrap = false;
             this.Lyrics.TextChanged += new System.EventHandler(this.Lyrics_TextChanged);
+            this.Lyrics.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Lyrics_MouseUp);
             // 
             // Translate
             // 
@@ -194,6 +149,7 @@
             this.Translate.TabIndex = 5;
             this.Translate.WordWrap = false;
             this.Translate.TextChanged += new System.EventHandler(this.Translate_TextChanged);
+            this.Translate.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Translate_MouseUp);
             // 
             // Result
             // 
@@ -269,11 +225,58 @@
             this.button_Addspace.UseVisualStyleBackColor = true;
             this.button_Addspace.Click += new System.EventHandler(this.button_Addspace_Click);
             // 
-            // Form1
+            // textBox_editor
+            // 
+            this.textBox_editor.Location = new System.Drawing.Point(92, 587);
+            this.textBox_editor.Name = "textBox_editor";
+            this.textBox_editor.Size = new System.Drawing.Size(160, 20);
+            this.textBox_editor.TabIndex = 13;
+            // 
+            // label_editor
+            // 
+            this.label_editor.AutoSize = true;
+            this.label_editor.Location = new System.Drawing.Point(51, 590);
+            this.label_editor.Name = "label_editor";
+            this.label_editor.Size = new System.Drawing.Size(37, 13);
+            this.label_editor.TabIndex = 14;
+            this.label_editor.Text = "Editor:";
+            // 
+            // label_lyric_source
+            // 
+            this.label_lyric_source.AutoSize = true;
+            this.label_lyric_source.Location = new System.Drawing.Point(325, 590);
+            this.label_lyric_source.Name = "label_lyric_source";
+            this.label_lyric_source.Size = new System.Drawing.Size(45, 13);
+            this.label_lyric_source.TabIndex = 16;
+            this.label_lyric_source.Text = "source: ";
+            // 
+            // textBox_source
+            // 
+            this.textBox_source.Location = new System.Drawing.Point(376, 587);
+            this.textBox_source.Name = "textBox_source";
+            this.textBox_source.Size = new System.Drawing.Size(135, 20);
+            this.textBox_source.TabIndex = 15;
+            // 
+            // button_copy
+            // 
+            this.button_copy.Location = new System.Drawing.Point(801, 564);
+            this.button_copy.Name = "button_copy";
+            this.button_copy.Size = new System.Drawing.Size(112, 23);
+            this.button_copy.TabIndex = 17;
+            this.button_copy.Text = "Copy To Clipboard";
+            this.button_copy.UseVisualStyleBackColor = true;
+            this.button_copy.Click += new System.EventHandler(this.button_copy_Click);
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(935, 596);
+            this.ClientSize = new System.Drawing.Size(935, 619);
+            this.Controls.Add(this.button_copy);
+            this.Controls.Add(this.label_lyric_source);
+            this.Controls.Add(this.textBox_source);
+            this.Controls.Add(this.label_editor);
+            this.Controls.Add(this.textBox_editor);
             this.Controls.Add(this.button_Addspace);
             this.Controls.Add(this.TranslationLines);
             this.Controls.Add(this.LyricLines);
@@ -287,8 +290,8 @@
             this.Controls.Add(this.MainStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MainStrip;
-            this.Name = "Form1";
-            this.Text = "lrc file translator v1.4.1";
+            this.Name = "MainForm";
+            this.Text = "lrc file translator";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.MainStrip.ResumeLayout(false);
             this.MainStrip.PerformLayout();
@@ -300,19 +303,12 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip MainStrip;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox Lyrics;
         private System.Windows.Forms.TextBox Translate;
         private System.Windows.Forms.TextBox Result;
-        private System.Windows.Forms.ToolStripMenuItem lRCToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem translationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem appendToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem forwardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;
@@ -324,6 +320,12 @@
         private System.Windows.Forms.Label LyricLines;
         private System.Windows.Forms.Label TranslationLines;
         private System.Windows.Forms.Button button_Addspace;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBox_editor;
+        private System.Windows.Forms.Label label_editor;
+        private System.Windows.Forms.Label label_lyric_source;
+        private System.Windows.Forms.TextBox textBox_source;
+        private System.Windows.Forms.Button button_copy;
     }
 }
 

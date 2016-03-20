@@ -61,6 +61,12 @@
     <Compile Include="lrc file translator.Designer.cs">
       <DependentUpon>lrc file translator.cs</DependentUpon>
     </Compile>
+    <Compile Include="LRCAboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LRCAboutBox.Designer.cs">
+      <DependentUpon>LRCAboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="about.resx">
@@ -68,6 +74,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="lrc file translator.resx">
       <DependentUpon>lrc file translator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LRCAboutBox.resx">
+      <DependentUpon>LRCAboutBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

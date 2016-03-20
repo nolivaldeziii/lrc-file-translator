@@ -57,6 +57,7 @@ using System.Text;
  * ************************************************************
  * Project Started: November 15, 2012
  *     Modified on: 23 March 2014
+ *                  20 March 2016
  *     
  * ************************************************************
  * Thanks to:
@@ -65,6 +66,7 @@ using System.Text;
  * ************************************************************
  * Changelog:
  *  1.0.1 Changed Append to not add additionanl one second to translation
+ *  1.0.2 i've used git starting 20 march 2016 so this wont matter anyways
  *  
  * ************************************************************/
 namespace DevCircuit
@@ -132,13 +134,30 @@ namespace DevCircuit
         #endregion
 
         //public TranslateFromLRC() { Lyrics = ""; Translations = ""; }
+        public TranslateFromLRC()
+        {
+
+        }
+
         public TranslateFromLRC(string lyrics, string translation)
+        {
+            AddInfo(lyrics, translation);
+        }
+
+        public void AddInfo(string lyrics, string translation)
         {
             Translations = ConvertToStringArray(translation);
             Lyrics = ConvertToStringArray(lyrics);
             CheckSum();
         }
 
+        public string EditorName { get; set; }
+        public string SourceName { get; set; }
+
+        /// <summary>
+        /// append the translation to the timed lyrics
+        /// </summary>
+        /// <returns></returns>
         public override string[] Append()
         {
             List<string> output = new List<string>();
@@ -199,8 +218,14 @@ namespace DevCircuit
 
             return Result;
         }
+
+        /// <summary>
+        /// replace the timed lyric with the translated lyrics
+        /// </summary>
+        /// <returns></returns>
         public override string[] Replace()
         {
+            
             List<string> output = new List<string>();
             //string[] LyricsHolder = ConvertToStringArray(Lyrics + "\n");
             //string[] TranslationHolder = ConvertToStringArray(Translations + "\n");
@@ -257,6 +282,10 @@ namespace DevCircuit
 
             return Result;
         }
+
+        /// <summary>
+        /// Put both original lyrics and translated lyrics on the final output
+        /// </summary>
         public override string[] Forward()
         {
             List<string> output = new List<string>();
@@ -323,30 +352,30 @@ namespace DevCircuit
                 }
 
             }
-            MyTime.AddSec(6);
-            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), "."));
-            MyTime.AddSec(1);
-            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), "  ♫ ♫ end ♫ ♫  "));
-            MyTime.AddSec(8);
-            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), "konoakuta(at)gmail(dot)com"));
-            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), "."));
-            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), "."));
-            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), "."));
-            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), "."));
-            MyTime.AddSec();
-            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), " "));
-            MyTime.AddSec();
-            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), " "));
-            MyTime.AddSec();
-            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), " "));
-            MyTime.AddSec();
-            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), " "));
-            output.Add(" "); output.Add(" ");
-            output.Add(" "); output.Add(" ");
+
+            FinalAddition(ref MyTime, ref output);
        
             Result = output.ToArray();
 
             return Result;
+        }
+
+        private void FinalAddition(ref Time MyTime, ref List<string> output)
+        {
+            MyTime.AddSec(3);
+            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), "  ♫ ♫ end ♫ ♫  "));
+            MyTime.AddSec(1);
+            output.Add(string.Format("{0} Source: {1}", MyTime.ToLRC(), this.SourceName));
+            MyTime.AddSec(1);
+            output.Add(string.Format("{0} Edited By: {1}", MyTime.ToLRC(), this.EditorName));
+            MyTime.AddSec(2);
+            output.Add(string.Format("{0} Date Generated: {1}", MyTime.ToLRC(), System.DateTime.Now.ToString()));
+            MyTime.AddSec(2);
+            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), " Automated by 'lrc-file-translator' get it on github "));
+            MyTime.AddSec(2);
+            output.Add(string.Format("{0}{1}", MyTime.ToLRC(), "."));
+            output.Add(" "); output.Add(" ");
+            output.Add(" "); output.Add(" ");
         }
 
         public override void GetLyric(string x)
@@ -639,27 +668,47 @@ namespace DevCircuit
             Wrapper_[0] = '[';
             Wrapper_[1] = ']';
 
+            ReadSettings();
+
         }
 
+        /// <summary>
+        /// Lyric line with empty string will be ignored when translating
+        /// </summary>
         public bool IgnoreEmprtyLyrics
         {
             get { return IgnoreEmptyLyrics_; }
             set { IgnoreEmptyLyrics_ = value; }
         }
+        /// <summary>
+        /// if the translation side has no lyrics, ignore the error
+        /// </summary>
         public bool IgnoreEmptryTranslation 
         { get { return IgnoreEmptyTranslation_; } set { IgnoreEmptyTranslation_ = value; } }
+        /// <summary>
+        /// if the line numbers dones not match when translating, ignore this check
+        /// </summary>
         public bool IgnoreLineNumberCheck 
         { get { return IgnoreLineNumberCheck_; } set { IgnoreLineNumberCheck_ = value; } }
+        /// <summary>
+        /// wrap around the translation on the editor
+        /// </summary>
         public bool WrapTranslation 
         { get { return WrapTranslation_; } set { WrapTranslation_ = value; } }
+        /// <summary>
+        /// I forgot what this is for
+        /// </summary>
         public char[] Wrapper 
         { get { return Wrapper_; } set { Wrapper_ = value; } }
 
+        /// <summary>
+        /// read the settings.ini file
+        /// </summary>
         public void ReadSettings() 
         {
             if (!System.IO.File.Exists(".\\settings.ini"))
             {
-                throw new SettingNotFoundException("Settings Not Found");
+                //throw new SettingNotFoundException("Settings Not Found");
             }
             else
             {
@@ -672,6 +721,10 @@ namespace DevCircuit
                 Wrapper_[0] = Convert.ToChar(ReadSettings.Read()); Wrapper_[1] = Convert.ToChar(ReadSettings.Read());
             }
         }
+
+        /// <summary>
+        /// write / over write the settings.ini file
+        /// </summary>
         public void WriteSettings() 
         {
             System.IO.TextWriter WriteSettings = new System.IO.StreamWriter(".\\settings.ini");
@@ -696,5 +749,6 @@ namespace DevCircuit
             public SettingNotFoundException() : base() { }
             public SettingNotFoundException(string Message) : base(Message) { }
         }
+
     }
 }
