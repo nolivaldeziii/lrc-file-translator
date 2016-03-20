@@ -1,74 +1,24 @@
-﻿using System;
+﻿/*
+Copyright 2012 Noli Valdez III
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-/* <<---HIDE THIS
- * Namespace:  DevCircuit
- * **************************************************************
- * Coded by
- *      Name: Noli Valdez III
- *     Email: devcircuit23@gmail.com
- *       URL:
- * **************************************************************
- *   Classes:  
- *             TranslateFromLRC : Translate
- *                  constructors:
- *                  private methods:
- *                  public methods:         
- *                  properties:
- *                  exceptions:
- *                      TranslateFailException
- *             Time
- *                  constructors:
- *                  private methods:
- *                  public methods:
- *                  properties:
- *                  exceptions:
- *                  
- *             Settings
- *                  private methods:
- *                  public methods:
- *                  properties:
- *                  exceptions:
- *                  
- *             Translate (abstract)
- *                  public methods(static):
- *                      int CalculateLineNumbers(string)
- *                      int CalculateLineNumbers(string[])
- *                      string[] ConvertToStringArray(string)
- *                  Abstracts:
- *                      string[] Append()
- *                      string[] Forward()
- *                      string[] Replace()
- *                      void GetLyric(string)
- *                      void GetLyric(string[])
- *                      void GetTranslation(string)
- *                      void GetTranslation(string[])
- *                      string[] ToLRC()
- *                      void CheckSum()
- *                      
- *             ITimeConvertible (interface)
- *             IConvertible (interface)
- *             
- *   Version:  1.0
- *   Website:  
- *   
- * ************************************************************
- * Project Started: November 15, 2012
- *     Modified on: 23 March 2014
- *                  20 March 2016
- *     
- * ************************************************************
- * Thanks to:
- *  None so far
- *  
- * ************************************************************
- * Changelog:
- *  1.0.1 Changed Append to not add additionanl one second to translation
- *  1.0.2 i've used git starting 20 march 2016 so this wont matter anyways
- *  
- * ************************************************************/
 namespace DevCircuit
 {
     public enum Format { lrc, srt, ass, unknown }
